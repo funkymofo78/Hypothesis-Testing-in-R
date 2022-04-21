@@ -1,0 +1,116 @@
+#Test the null hypothesis that males and females have the same height. 
+#What is the null and alternative hypothesis?
+#  Are the assumptions met?
+#  What is the P-value for this test?
+#  Do we reject the null hypothesis?
+
+  
+#Male Height =Female Height
+#Male Height Not = Female Height
+
+mydata <- read.table("Data.txt", header=T)
+male_height<-mydata$Height[mydata$Sex==1]
+female_height<-mydata$Height[mydata$Sex==2]
+mean(male_height)
+mean(female_height)
+boxplot(male_height, female_height)
+boxplot(male_height, female_height, names = c("Male", "Female"))
+print(boxplot(male_height, female_height))
+#Happy with the assumptions of normality and equal variance.
+
+
+male_height
+hist(male_height)
+hist(female_height)
+?t.test
+t.test(male_height,female_height)
+
+#Pvalue=0.0008055 < 0.05, therefore we reject H0 and conclude that there is a signficant difference between
+#mean male height and mean female height.
+#The 95% CI tells us that we are 95% confident that the true population mean difference for male and female
+#height lies between 5.4cm and 19.5cm.
+
+
+
+#Test the null hypothesis that males and females have the same mean weight.
+#What is the null and alternative hypothesis?
+#  Are the assumptions met?
+#  What is the P-value for this test?
+#  Do we reject the null hypothesis?
+#  What does the confidence interval tell us?
+  
+
+
+#Male weight = Female weight
+#Male weight Not = Female weight
+
+male_weight <- mydata$Weight[mydata$Sex==1]
+female_weight <- mydata$Weight[mydata$Sex==2]
+mean(male_weight)
+mean(female_weight)
+boxplot(male_weight, female_weight, names = c("Male", "Female"))
+hist(male_weight)
+hist(female_weight)
+
+#Happy with the assumptions of normality and equal variance
+
+t.test(male_weight,female_weight)
+
+#Pvalue = 0.00005708 < 0.05, therefore we reject H0 and conclude that there is a signficant difference between
+#mean male weight and mean female weight.
+#The 95% CI tells us that we are 95% confident that the true population mean difference for male and female
+#weight lies between approximately 4kg and 11kg.
+
+
+
+#test that those with the disease and those without the disease have the same mean blood pressure.
+#What is the null and alternative hypothesis?
+#  Are the assumptions met?
+#  What is the P-value for this test?
+#  Do we reject the null hypothesis? 
+#  What does the confidence interval tell us?
+  
+#H0: mu_affect = mu_unaffect, where mu is the pop. mean for blood pressure.
+#H1: mu_affect not equal mu_unaffect, where mu is the pop. mean for blood pressure
+
+
+not_aff_bp <- mydata$Blood_Pressure[mydata$Disease_Status=="N"]
+aff_bp <- mydata$Blood_Pressure[mydata$Disease_Status=="D"]
+hist(aff_bp)
+hist(not_aff_bp)
+boxplot(aff_bp, not_aff_bp, names = c("Affected", "Not Affected"))
+
+
+t.test(aff_bp, not_aff_bp)
+
+#Pvalue = 0.85 > 0.05, therefore we fail to reject H0, and based on the data there is no evidence to suggest a
+#difference between pop. mean for blood pressure for those affected and unaffected by the disease.
+#The 95% CI tells us that we are 95% confident that the true population mean difference for blood pressure
+#between diseased and not diseased lies between -14.15 and 17.05.
+
+
+
+#test the hypothesis that there is no difference in the mean weight of individuals after the six months. 
+
+#H0: mu_before=mu_after
+#H0: mu_before-mu_after=0, mu is population mean weight
+#H0: mu_diff = 0, mu is population mean weight difference
+#H1: mu_before-mu_after is not equal to 0
+
+
+hist(mydata$Weight - mydata$Weights_After_6_Months)
+
+boxplot(mydata$Weight, mydata$Weights_After_6_Months,
+        names = c("Before", "After"))
+
+
+t.test(x=mydata$Weight, y=mydata$Weights_After_6_Months,
+       paired = TRUE)
+
+
+#Pvalue > 0.05, therefore fail to reject H0 ie there is no difference in the mean weight before and after 6
+#months.
+#The 95% CI means that 95% of the time the true mean difference will lie between -0.37kg and 0.60 kg.
+#Since the 95% CI contains the null hypothesised value of 0, the confidence interval agrees with the hypothesis
+#test that we would fail to reject ie. 0 appears to be a reasonable value for the difference between the means
+#before and after 6 months
