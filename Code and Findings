@@ -114,3 +114,39 @@ t.test(x=mydata$Weight, y=mydata$Weights_After_6_Months,
 #Since the 95% CI contains the null hypothesised value of 0, the confidence interval agrees with the hypothesis
 #test that we would fail to reject ie. 0 appears to be a reasonable value for the difference between the means
 #before and after 6 months
+
+
+
+
+#test the hypothesis that the proportion of men and women with the disease are equal 
+
+#H0: p1=p2, where p1 is the prop of males with the disease, p2 is the proportion of females with the disease.
+#H1: p1 not equal to p2
+
+
+disease.table <- table(mydata$Sex,mydata$Disease_Status)
+
+disease.table
+
+prop.test(disease.table)
+
+#P-value = 0.21 > 0.05, therefore fail to reject H0 and conclude no signifant difference between proportions of
+#affected males and affected females
+
+prop.test(c(9,4),n=c(30,30))
+
+
+#test the same hypothesis that the same proportion of men and women have the disease
+help(chisq.test)
+disease_chisq <- chisq.test(disease.table)
+disease_chisq$expected
+
+#Looking at the expected values, I have enough enough data to meet my assumptions as all expected values
+#are greater than or equal to 5.
+
+
+disease_chisq$p.value
+
+chisq.test(mydata$Sex,mydata$Disease_Status)
+
+#P-value = 0.21 > 0.05, therefore fail to reject H0 that sex and disease are independent
